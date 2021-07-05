@@ -135,34 +135,27 @@
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
                                         <ul class="pagination">
-                                            <li class="paginate_button page-item previous disabled"
-                                                id="example_previous"><a href="#" aria-controls="example"
-                                                                         data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+
+                                            <li class="paginate_button page-item previous" v-if="page != pages">
+                                                <router-link :to="`/blocks/${pages}`" class="page-link">{{ pages }} << </router-link>
                                             </li>
-                                            <li class="paginate_button page-item active"><a href="#"
-                                                                                            aria-controls="example"
-                                                                                            data-dt-idx="1" tabindex="0"
-                                                                                            class="page-link">1</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="example"
-                                                                                      data-dt-idx="2" tabindex="0"
-                                                                                      class="page-link">2</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="example"
-                                                                                      data-dt-idx="3" tabindex="0"
-                                                                                      class="page-link">3</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="example"
-                                                                                      data-dt-idx="4" tabindex="0"
-                                                                                      class="page-link">4</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="example"
-                                                                                      data-dt-idx="5" tabindex="0"
-                                                                                      class="page-link">5</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="example"
-                                                                                      data-dt-idx="6" tabindex="0"
-                                                                                      class="page-link">6</a></li>
-                                            <li class="paginate_button page-item next" id="example_next"><a href="#"
-                                                                                                            aria-controls="example"
-                                                                                                            data-dt-idx="7"
-                                                                                                            tabindex="0"
-                                                                                                            class="page-link">Next</a>
+                                            <li class="paginate_button page-item" v-if="page < pages-2">
+                                                <router-link :to="`/blocks/${page+2}`"  class="page-link">{{ page+2 }}</router-link>
+                                            </li>
+                                            <li class="paginate_button page-item" v-if="page < pages -1 ">
+                                                <router-link :to="`/blocks/${page+1}`" class="page-link">{{ page+1}}</router-link>
+                                            </li>
+                                            <li class="paginate_button page-item active">
+                                                <router-link :to="`/blocks/${page}`" class="page-link">{{ page }}</router-link>
+                                            </li>
+                                            <li class="paginate_button page-item" v-if="page>1">
+                                                <router-link :to="`/blocks/${page-1}`" class="page-link">{{ page-1 }}</router-link>
+                                            </li>
+                                            <li class="paginate_button page-item " v-if="page>2">
+                                                <router-link :to="`/blocks/${page-2}`" class="page-link">{{ page-2 }}</router-link>
+                                            </li>
+                                            <li class="paginate_button page-item next" v-if="page >0">
+                                                <router-link :to="`/blocks/0`" class="page-link">>> 0</router-link>
                                             </li>
                                         </ul>
                                     </div>
@@ -200,6 +193,8 @@ export default {
 
             start: 0,
             end: 0,
+
+            pageSet: null,
         }
     },
 
@@ -211,6 +206,20 @@ export default {
 
     mounted(){
         return this.load()
+    },
+
+    computed: {
+        page(){
+            if (typeof this.$route.params.page === "string")
+                return Number.parseInt(this.$route.params.page)
+
+            return this.pageSet
+        },
+
+        pages(){
+            if (this.height===0) return 0
+            return Math.floor(this.height/10)
+        }
     },
 
     methods:{
@@ -231,7 +240,10 @@ export default {
                 this.height = out.height
                 this.hash = out.hash
 
-                await this.getBlocks(this.height-10)
+                if (this.page === null )
+                    this.pageSet = Math.floor(this.height / 10)
+
+                await this.getBlocks()
 
             }catch(err){
                 this.error = err.toString()
@@ -241,10 +253,10 @@ export default {
 
         },
 
-        async getBlocks(start){
+        async getBlocks(){
 
-            this.start = start;
-            this.end = start + 10
+            this.start = this.page * 10;
+            this.end = this.start + 10
 
             const outBlocks = await HttpHelper.get(consts.server+"/blocks", {
                 start: this.start,

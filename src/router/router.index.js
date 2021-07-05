@@ -10,6 +10,8 @@ Vue.use(VueRouter);
 
 const routes = [
     { path: '/', component: HomePage },
+    { path: '/blocks/:page', component: HomePage },
+
     { path: '/block/:param', component: BlockPage },
     { path: '/tx/:hash', component: TxPage },
     { path: '/address/:address', component: AddressPage },
