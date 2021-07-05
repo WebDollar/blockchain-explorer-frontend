@@ -21,12 +21,13 @@ const router = new VueRouter({
     base: '/',
     mode: 'history',
     scrollBehavior(to, from, savedPosition) {
-        if (to.hash) {
-            return { selector: to.hash }
-        } else if (savedPosition) {
-            return savedPosition;
-        } else {
-            return { x: 0, y: 0 }
+
+        try{
+            if (to.hash) return { selector: to.hash }
+            else if (savedPosition) return savedPosition;
+            else return { x: 0, y: 0 }
+        }catch(err){
+
         }
     },
     routes // short for `routes: routes`

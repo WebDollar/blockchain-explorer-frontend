@@ -74,13 +74,13 @@
                                            role="grid" aria-describedby="example_info">
                                         <thead>
                                             <tr role="row">
-                                                <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" >Height</th>
-                                                <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" >Hash</th>
-                                                <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" >TXs</th>
-                                                <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" >Timestamp</th>
-                                                <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" >Reward</th>
-                                                <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" >Miner</th>
-                                                <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" >Resolved by</th>
+                                                <th style="width:80px">Height</th>
+                                                <th >Hash</th>
+                                                <th >TXs</th>
+                                                <th style="width: 80px" >Timestamp</th>
+                                                <th style="width: 60px">Reward</th>
+                                                <th >Miner</th>
+                                                <th >Resolved by</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -105,7 +105,7 @@
                                                         <br/>
                                                     </span>
                                                 </td>
-                                                <td>{{block.data.timeStamp}}</td>
+                                                <td>{{ timeSince(block.data.timeStamp*1000 + 1524742312*1000) }}</td>
                                                 <td>{{block.data.reward/10000}}</td>
                                                 <td>
                                                     <template v-if="block.data.data.minerAddress">
@@ -178,6 +178,7 @@ import Layout from "src/components/layout/layout"
 import HttpHelper from "src/utils/http-helper"
 import consts from "consts/consts"
 import AddressHelper from "src/utils/address-helper"
+import StringHelper from "src/utils/string-helper"
 
 export default {
     components: { Layout },
@@ -209,6 +210,7 @@ export default {
     },
 
     computed: {
+
         page(){
             if (typeof this.$route.params.page === "string")
                 return Number.parseInt(this.$route.params.page)
@@ -229,6 +231,7 @@ export default {
         },
 
         convertAddress: (a) => AddressHelper.convertAddress(a) ,
+        timeSince: (a) => StringHelper.timeSince(a),
 
         async load(){
 
@@ -255,7 +258,7 @@ export default {
 
         async getBlocks(){
 
-            this.start = this.page * 10;
+            this.start = Math.min(this.page * 10, this.height);
             this.end = this.start + 10
 
             const outBlocks = await HttpHelper.get(consts.server+"/blocks", {

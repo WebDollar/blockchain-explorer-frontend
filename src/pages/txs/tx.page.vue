@@ -42,6 +42,14 @@
                                         <th scope="row"><b>TimeLock</b></th>
                                         <td>{{tx.data.timeLock}}</td>
                                     </tr>
+                                    <tr>
+                                        <th scope="row"><b>Timestamp</b></th>
+                                        <td>{{timeSince(tx.timestamp *1000 + 1524742312*1000) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><b>Block</b></th>
+                                        <td>{{tx.height}}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -64,7 +72,7 @@
                                         <router-link :to="`/address/${from.address}`">
                                             {{from.address}}
                                         </router-link>
-                                        <b class="red">-{{from.amount}}</b>
+                                        <b class="red">-{{from.amount/10000}}</b>
                                     </span>
                                 </div>
                                 <div class="col-md-6">
@@ -73,7 +81,7 @@
                                         <router-link :to="`/address/${to.address}`">
                                             {{to.address}}
                                         </router-link>
-                                        <b class="green">+{{to.amount}}</b>
+                                        <b class="green">+{{to.amount/10000}}</b>
                                     </span>
                                 </div>
                             </div>
@@ -95,6 +103,7 @@
 
 import Layout from "src/components/layout/layout"
 import HttpHelper from "src/utils/http-helper"
+import StringHelper from "src/utils/string-helper"
 import consts from "consts/consts"
 import AddressHelper from "src/utils/address-helper"
 
@@ -124,6 +133,7 @@ export default {
     methods: {
 
         convertAddress: (a) => AddressHelper.convertAddress(a),
+        timeSince: (a) => StringHelper.timeSince(a),
 
         async load(){
 

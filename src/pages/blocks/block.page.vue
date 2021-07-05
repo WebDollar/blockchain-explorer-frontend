@@ -64,7 +64,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="row"><b>Timestamp</b></th>
-                                        <td>{{block.data.timeStamp}}</td>
+                                        <td>{{timeSince(block.data.timeStamp *1000 + 1524742312*1000) }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><b>Difficulty</b></th>
@@ -115,6 +115,7 @@
 
 import Layout from "src/components/layout/layout"
 import HttpHelper from "src/utils/http-helper"
+import StringHelper from "src/utils/string-helper"
 import consts from "consts/consts"
 import AddressHelper from "src/utils/address-helper"
 
@@ -144,6 +145,7 @@ export default {
     methods: {
 
         convertAddress: (a) => AddressHelper.convertAddress(a),
+        timeSince: (a) => StringHelper.timeSince(a),
 
         async load(){
 

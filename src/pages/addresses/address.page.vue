@@ -36,7 +36,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="row"><b>Nonce</b></th>
-                                        <td>todo</td>
+                                        <td>{{address.nonce}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -49,10 +49,9 @@
 
                     <div class="main-card mb-3 card">
                         <div data-v-14623592="" data-v-f3e19b62="" class="card-header-tab card-header"><div data-v-14623592="" data-v-f3e19b62="" class="card-header-title font-size-lg text-capitalize font-weight-normal"><i data-v-14623592="" data-v-f3e19b62="" class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"></i>
-                            Transfers
+                            Transfers {{address.txs}}
                         </div></div>
                         <div class="card-body">
-
 
                         </div>
                     </div>
