@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="no-gutters row">
-                        <div class="col-sm-6 col-md-6 col-xl-6">
+                        <div class="col-sm-3 col-md-3 col-xl-3">
                             <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
                                 <div class="icon-wrapper rounded-circle">
                                     <div class="icon-wrapper-bg opacity-10 bg-warning"></div>
@@ -35,12 +35,12 @@
                                 </div>
                                 <div class="widget-chart-content">
                                     <div class="widget-subheading">Blocks</div>
-                                    <div class="widget-numbers">{{height}}</div>
+                                    <div class="widget-numbers">{{chain.height}}</div>
                                 </div>
                             </div>
                             <div class="divider m-0 d-md-none d-sm-block"></div>
                         </div>
-                        <div class="col-sm-6 col-md-6 col-xl-6">
+                        <div class="col-sm-3 col-md-3 col-xl-3">
                             <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
                                 <div class="icon-wrapper rounded-circle">
                                     <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
@@ -48,7 +48,33 @@
                                 </div>
                                 <div class="widget-chart-content">
                                     <div class="widget-subheading">Last Block Hash</div>
-                                    <div class="widget-numbers"><span>{{hash.substr(0,4)}}...{{hash.substr(hash.length-4)}}</span></div>
+                                    <div class="widget-numbers"><span>...{{chain.hash.substr(chain.hash.length-5)}}</span></div>
+                                </div>
+                            </div>
+                            <div class="divider m-0 d-md-none d-sm-block"></div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-xl-3">
+                            <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                                <div class="icon-wrapper rounded-circle">
+                                    <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
+                                    <i class="lnr-book text-white"></i>
+                                </div>
+                                <div class="widget-chart-content">
+                                    <div class="widget-subheading">Circulating Supply</div>
+                                    <div class="widget-numbers"><span>{{ Math.floor( chain.circulatingSupply/10000/1000/1000/100)/10 }} b</span></div>
+                                </div>
+                            </div>
+                            <div class="divider m-0 d-md-none d-sm-block"></div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-xl-3">
+                            <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                                <div class="icon-wrapper rounded-circle">
+                                    <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
+                                    <i class="lnr-book text-white"></i>
+                                </div>
+                                <div class="widget-chart-content">
+                                    <div class="widget-subheading">Transactions</div>
+                                    <div class="widget-numbers"><span>{{chain.transactionsCount}}</span></div>
                                 </div>
                             </div>
                             <div class="divider m-0 d-md-none d-sm-block"></div>
@@ -188,8 +214,7 @@ export default {
             loading: true,
             error: "",
 
-            height: "",
-            hash: "",
+            chain: null,
             blocks: [],
 
             start: 0,
@@ -219,8 +244,8 @@ export default {
         },
 
         pages(){
-            if (this.height===0) return 0
-            return Math.floor(this.height/10)
+            if (this.chain.height===0) return 0
+            return Math.floor(this.chain.height/10)
         }
     },
 
@@ -240,11 +265,10 @@ export default {
                 this.error = ""
 
                 const out = await HttpHelper.get(consts.server+"/chain")
-                this.height = out.height
-                this.hash = out.hash
+                this.chain = out
 
                 if (this.page === null )
-                    this.pageSet = Math.floor(this.height / 10)
+                    this.pageSet = Math.floor(this.chain.height / 10)
 
                 await this.getBlocks()
 
@@ -258,7 +282,7 @@ export default {
 
         async getBlocks(){
 
-            this.start = Math.min(this.page * 10, this.height-10);
+            this.start = Math.min(this.page * 10, this.chain.height-10);
             this.end = this.start + 10
 
             const outBlocks = await HttpHelper.get(consts.server+"/blocks", {
