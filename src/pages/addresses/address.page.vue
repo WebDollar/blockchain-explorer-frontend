@@ -51,7 +51,14 @@
                         <div data-v-14623592="" data-v-f3e19b62="" class="card-header-tab card-header"><div data-v-14623592="" data-v-f3e19b62="" class="card-header-title font-size-lg text-capitalize font-weight-normal"><i data-v-14623592="" data-v-f3e19b62="" class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"></i>
                             Transfers {{address.txs}}
                         </div></div>
+
                         <div class="card-body">
+
+                            <show-tx v-for="(addressTx, index) in txs"  class="addressTx"
+                                     :key="`addr_tx_${index}`"
+                                     :tx="addressTx.tx">
+
+                            </show-tx>
 
                         </div>
                     </div>
@@ -68,76 +75,79 @@
 
 <script>
 
-    import Layout from "src/components/layout/layout"
-    import HttpHelper from "src/utils/http-helper"
-    import consts from "consts/consts"
-    import AddressHelper from "src/utils/address-helper"
+import Layout from "src/components/layout/layout"
+import HttpHelper from "src/utils/http-helper"
+import consts from "consts/consts"
+import AddressHelper from "src/utils/address-helper"
+import ShowTx from "../../components/show-tx";
 
-    export default {
+export default {
 
-        components: {Layout},
+    components: {ShowTx, Layout},
 
-        data(){
-            return {
-                loading: true,
-                error: "",
+    data(){
+        return {
+            loading: true,
+            error: "",
 
-                tx: null,
-            }
-        },
-
-        computed:{
-            addr(){
-                return this.$route.params.address+this.$route.hash
-            }
-        },
-
-        async mounted(){
-            return this.load()
-        },
-
-        watch:{
-            $route (to, from){
-                return this.load()
-            }
-        },
-
-        methods: {
-
-            convertAddress: (a) => AddressHelper.convertAddress(a),
-
-            async load(){
-
-                try{
-                    this.loading = true;
-                    this.error = ""
-
-                    const addr = this.addr
-                    if (!addr) throw "Argument is missing"
-
-                    const address = await HttpHelper.get(consts.server + "/address", { address: addr} )
-                    this.address = address
-
-                }catch(err){
-                    this.error = err.toString()
-                }finally{
-                    this.loading = false
-                }
-
-            },
-
+            address: null,
+            txs: null,
         }
+    },
+
+    computed:{
+        addr(){
+            return this.$route.params.address+this.$route.hash
+        }
+    },
+
+    async mounted(){
+        return this.load()
+    },
+
+    watch:{
+        $route (to, from){
+            return this.load()
+        }
+    },
+
+    methods: {
+
+        convertAddress: (a) => AddressHelper.convertAddress(a),
+
+        async load(){
+
+            try{
+                this.loading = true;
+                this.error = ""
+
+                const addr = this.addr
+                if (!addr) throw "Argument is missing"
+
+                const address = await HttpHelper.get(consts.server + "/address", { address: addr} )
+                this.address = address
+
+                const txs = await HttpHelper.get(consts.server + "/address-txs", { address: addr} )
+                this.txs = txs
+
+            }catch(err){
+                this.error = err.toString()
+            }finally{
+                this.loading = false
+            }
+
+        },
 
     }
+
+}
 
 </script>
 
 <style scoped>
-    .red{
 
+    .addressTx{
+        padding-top: 20px;
     }
 
-    .green{
-
-    }
 </style>

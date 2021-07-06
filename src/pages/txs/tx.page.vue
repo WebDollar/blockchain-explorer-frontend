@@ -48,7 +48,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="row"><b>Block</b></th>
-                                        <td>{{tx.height}}</td>
+                                        <td>{{tx.blockHeight}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -65,26 +65,7 @@
                         </div></div>
                         <div class="card-body">
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <span v-for="(from, index) in tx.data.from.addresses"
-                                          :key="`tx_from_${index}`">
-                                        <router-link :to="`/address/${from.address}`">
-                                            {{from.address}}
-                                        </router-link>
-                                        <b class="red">-{{from.amount/10000}}</b>
-                                    </span>
-                                </div>
-                                <div class="col-md-6">
-                                    <span v-for="(to, index) in tx.data.to.addresses"
-                                          :key="`tx_to_${index}`">
-                                        <router-link :to="`/address/${to.address}`">
-                                            {{to.address}}
-                                        </router-link>
-                                        <b class="green">+{{to.amount/10000}}</b>
-                                    </span>
-                                </div>
-                            </div>
+                            <show-tx :tx="tx" />
 
                         </div>
                     </div>
@@ -106,10 +87,11 @@ import HttpHelper from "src/utils/http-helper"
 import StringHelper from "src/utils/string-helper"
 import consts from "consts/consts"
 import AddressHelper from "src/utils/address-helper"
+import ShowTx from "../../components/show-tx";
 
 export default {
 
-    components: {Layout},
+    components: {ShowTx, Layout},
 
     data(){
         return {
@@ -162,11 +144,5 @@ export default {
 </script>
 
 <style scoped>
-.red{
-    color: red
-}
 
-.green{
-    color: green
-}
 </style>
