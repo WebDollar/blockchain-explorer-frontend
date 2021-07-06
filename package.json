@@ -5,7 +5,7 @@
     "build-deploy": "webpack --config build/deploy/webpack-deploy.config.js",
     "build-wallet": "webpack --config build/webpack-app.config.js",
     "build-wallet-analyzer": "webpack --config build/webpack-app.config.js --mode development --analyzer",
-    "build": "npm run build-wallet && npm run deploy",
+    "build": "npm run build-wallet",
     "test": "npm run build-wallet",
     "dev": "webpack-dev-server --config=./build/webpack-hot-loader.config.js --content-base dist/dev --hot --inline --host 0.0.0.0"
   },

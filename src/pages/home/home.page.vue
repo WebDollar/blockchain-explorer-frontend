@@ -92,99 +92,96 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table style="width: 100%;"
-                                           class="table table-hover table-striped table-bordered dataTable dtr-inline"
-                                           role="grid" aria-describedby="example_info">
-                                        <thead>
-                                            <tr role="row">
-                                                <th style="width:80px">Height</th>
-                                                <th >Hash</th>
-                                                <th >TXs</th>
-                                                <th style="width: 80px" >Timestamp</th>
-                                                <th style="width: 60px">Reward</th>
-                                                <th >Miner</th>
-                                                <th >Resolved by</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(block, index) in blocks"
-                                                :key="`tr_block_${index}`" role="row" :class="`${index % 2 === 0 ? 'odd': ''}`">
-                                                <td>
-                                                    <router-link :to="`/block/${block.height}`">
-                                                        {{block.height}}
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="align-middle text-truncate mb-0 table table-borderless table-hover">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="text-center" style="width:70px">Height</th>
+                                            <th class="text-center" style="width: 140px;" >Hash</th>
+                                            <th class="text-center" style="width: 140px;" >TXs</th>
+                                            <th class="text-center" style="width: 80px" >Timestamp</th>
+                                            <th class="text-center" style="width: 60px">Reward</th>
+                                            <th class="text-center" style="width: 180px" >Miner</th>
+                                            <th class="text-center" style="width: 180px" >Resolved by</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(block, index) in blocks"
+                                            :key="`tr_block_${index}`" role="row" :class="`${index % 2 === 0 ? 'odd': ''}`">
+                                            <td class="text-center" style="width:70px" >
+                                                <router-link :to="`/block/${block.height}`">
+                                                    {{block.height}}
+                                                </router-link>
+                                            </td>
+                                            <td class="text-center" style="width: 140px;">
+                                                <router-link :to="`/block/${block.hash}`">
+                                                    {{ subtract( block.hash, 6 )}}
+                                                </router-link>
+                                            </td>
+                                            <td class="text-center" style="width: 140px;" >
+                                                <div v-for="(tx, index) in block.data.data.transactions"
+                                                      :key="`tx_block_${index}`"
+                                                       style="display: block">
+                                                    <router-link :to="`/tx/${tx}`">
+                                                        {{ subtract( tx) }}
                                                     </router-link>
-                                                </td>
-                                                <td>
-                                                    <router-link :to="`/block/${block.hash}`">
-                                                        {{ subtract( block.hash, 6 )}}
+                                                </div>
+                                            </td>
+                                            <td class="text-center"  style="width: 80px">{{ timeSince(block.data.timeStamp*1000 + 1524742312*1000) }}</td>
+                                            <td class="text-center"  style="width: 60px">{{block.data.reward/10000}}</td>
+                                            <td class="text-center"  style="width: 180px">
+                                                <template v-if="block.data.data.minerAddress">
+                                                    <router-link :to="`/address/${convertAddress(block.data.data.minerAddress)}`">
+                                                        {{ subtract( convertAddress(block.data.data.minerAddress), 8 ) }}
                                                     </router-link>
-                                                </td>
-                                                <td>
-                                                    <span v-for="(tx, index) in block.data.data.transactions"
-                                                          :key="`tx_block_${index}`">
-                                                        <router-link :to="`/tx/${tx}`">
-                                                            {{ subtract( tx) }}
-                                                        </router-link>
-                                                        <br/>
-                                                    </span>
-                                                </td>
-                                                <td>{{ timeSince(block.data.timeStamp*1000 + 1524742312*1000) }}</td>
-                                                <td>{{block.data.reward/10000}}</td>
-                                                <td>
-                                                    <template v-if="block.data.data.minerAddress">
-                                                        <router-link :to="`/address/${convertAddress(block.data.data.minerAddress)}`">
-                                                            {{ subtract( convertAddress(block.data.data.minerAddress), 8 ) }}
-                                                        </router-link>
-                                                    </template>
-                                                </td>
-                                                <td>
-                                                    <template v-if="block.data.posMinerAddress">
-                                                        <router-link :to="`/address/${convertAddress(block.data.posMinerAddress)}`">
-                                                            {{subtract( convertAddress(block.data.posMinerAddress), 8 ) }}
-                                                        </router-link>
-                                                    </template>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                </template>
+                                            </td>
+                                            <td class="text-center" style="width: 180px" >
+                                                <template v-if="block.data.posMinerAddress">
+                                                    <router-link :to="`/address/${convertAddress(block.data.posMinerAddress)}`">
+                                                        {{subtract( convertAddress(block.data.posMinerAddress), 8 ) }}
+                                                    </router-link>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info" id="example_info" role="status" aria-live="polite">
+                                    Showing {{this.start}} to {{this.end}} of {{height}} entries
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="example_info" role="status" aria-live="polite">
-                                        Showing {{this.start}} to {{this.end}} of {{height}} entries
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-7">
-                                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-                                        <ul class="pagination">
+                            <div class="col-sm-12 col-md-7">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
+                                    <ul class="pagination">
 
-                                            <li class="paginate_button page-item previous" v-if="page != pages">
-                                                <router-link :to="`/blocks/${pages}`" class="page-link">{{ pages }} << </router-link>
-                                            </li>
-                                            <li class="paginate_button page-item" v-if="page < pages-2">
-                                                <router-link :to="`/blocks/${page+2}`"  class="page-link">{{ page+2 }}</router-link>
-                                            </li>
-                                            <li class="paginate_button page-item" v-if="page < pages -1 ">
-                                                <router-link :to="`/blocks/${page+1}`" class="page-link">{{ page+1}}</router-link>
-                                            </li>
-                                            <li class="paginate_button page-item active">
-                                                <router-link :to="`/blocks/${page}`" class="page-link">{{ page }}</router-link>
-                                            </li>
-                                            <li class="paginate_button page-item" v-if="page>1">
-                                                <router-link :to="`/blocks/${page-1}`" class="page-link">{{ page-1 }}</router-link>
-                                            </li>
-                                            <li class="paginate_button page-item " v-if="page>2">
-                                                <router-link :to="`/blocks/${page-2}`" class="page-link">{{ page-2 }}</router-link>
-                                            </li>
-                                            <li class="paginate_button page-item next" v-if="page >0">
-                                                <router-link :to="`/blocks/0`" class="page-link">>> 0</router-link>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                        <li class="paginate_button page-item previous" v-if="page != pages">
+                                            <router-link :to="`/blocks/${pages}`" class="page-link"><<</router-link>
+                                        </li>
+                                        <li class="d-none d-sm-block paginate_button page-item" v-if="page < pages-2">
+                                            <router-link :to="`/blocks/${page+2}`"  class="page-link">{{ page+2 }}</router-link>
+                                        </li>
+                                        <li class="paginate_button page-item" v-if="page < pages -1 ">
+                                            <router-link :to="`/blocks/${page+1}`" class="page-link">{{ page+1}}</router-link>
+                                        </li>
+                                        <li class="paginate_button page-item active">
+                                            <router-link :to="`/blocks/${page}`" class="page-link">{{ page }}</router-link>
+                                        </li>
+                                        <li class="paginate_button page-item" v-if="page>1">
+                                            <router-link :to="`/blocks/${page-1}`" class="page-link">{{ page-1 }}</router-link>
+                                        </li>
+                                        <li class="d-none d-sm-block paginate_button page-item " v-if="page>2">
+                                            <router-link :to="`/blocks/${page-2}`" class="page-link">{{ page-2 }}</router-link>
+                                        </li>
+                                        <li class="paginate_button page-item next" v-if="page >0">
+                                            <router-link :to="`/blocks/0`" class="page-link">>></router-link>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -244,6 +241,7 @@ export default {
         },
 
         pages(){
+            if (!this.chain) return 0
             if (this.chain.height===0) return 0
             return Math.floor(this.chain.height/10)
         }
