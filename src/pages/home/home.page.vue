@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="no-gutters row">
-                        <div class="col-sm-3 col-md-3 col-xl-3">
+                        <div class="col-sm-6 col-md-3 col-xl-3">
                             <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
                                 <div class="icon-wrapper rounded-circle">
                                     <div class="icon-wrapper-bg opacity-10 bg-warning"></div>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="divider m-0 d-md-none d-sm-block"></div>
                         </div>
-                        <div class="col-sm-3 col-md-3 col-xl-3">
+                        <div class="col-sm-6 col-md-3 col-xl-3">
                             <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
                                 <div class="icon-wrapper rounded-circle">
                                     <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
@@ -53,20 +53,20 @@
                             </div>
                             <div class="divider m-0 d-md-none d-sm-block"></div>
                         </div>
-                        <div class="col-sm-3 col-md-3 col-xl-3">
+                        <div class="col-sm-6 col-md-3 col-xl-3">
                             <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
                                 <div class="icon-wrapper rounded-circle">
                                     <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
                                     <i class="fa fa-coins text-white"></i>
                                 </div>
                                 <div class="widget-chart-content">
-                                    <div class="widget-subheading">Circulating Supply</div>
+                                    <div class="widget-subheading">Supply</div>
                                     <div class="widget-numbers"><span>{{ Math.floor( chain.circulatingSupply/10000/1000/1000/100)/10 }} b</span></div>
                                 </div>
                             </div>
                             <div class="divider m-0 d-md-none d-sm-block"></div>
                         </div>
-                        <div class="col-sm-3 col-md-3 col-xl-3">
+                        <div class="col-sm-6 col-md-3 col-xl-3">
                             <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
                                 <div class="icon-wrapper rounded-circle">
                                     <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
@@ -299,4 +299,7 @@ export default {
 </script>
 
 <style scoped>
+    .widget-numbers{
+        font-size: 2rem;
+    }
 </style>
