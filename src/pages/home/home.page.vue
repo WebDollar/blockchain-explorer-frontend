@@ -258,7 +258,7 @@ export default {
 
         async getBlocks(){
 
-            this.start = Math.min(this.page * 10, this.height);
+            this.start = Math.min(this.page * 10, this.height-10);
             this.end = this.start + 10
 
             const outBlocks = await HttpHelper.get(consts.server+"/blocks", {

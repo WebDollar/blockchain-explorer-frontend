@@ -49,4 +49,8 @@ export default {
     .green{
         color: green
     }
+
+    .row-odd{
+        background-color: rgba(0,0,0,0.03)
+    }
 </style>

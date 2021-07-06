@@ -28,7 +28,7 @@
                                 <tbody>
                                     <tr>
                                         <th scope="row"><b>Hash</b></th>
-                                        <td>{{tx.hash}}</td>
+                                        <td>{{tx.txId}}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><b>Nonce</b></th>
@@ -48,7 +48,11 @@
                                     </tr>
                                     <tr>
                                         <th scope="row"><b>Block</b></th>
-                                        <td>{{tx.blockHeight}}</td>
+                                        <td>
+                                            <router-link :to="`/block/${tx.blockHeight}`">
+                                                {{tx.blockHeight}}
+                                            </router-link>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

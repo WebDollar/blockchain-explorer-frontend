@@ -54,7 +54,7 @@
 
                         <div class="card-body">
 
-                            <show-tx v-for="(addressTx, index) in txs"  class="addressTx"
+                            <show-tx v-for="(addressTx, index) in txs"  :class="`addressTx ${index % 2 ? 'row-odd' : ''} `"
                                      :key="`addr_tx_${index}`"
                                      :tx="addressTx.tx">
 
@@ -147,7 +147,8 @@ export default {
 <style scoped>
 
     .addressTx{
-        padding-top: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 
 </style>
