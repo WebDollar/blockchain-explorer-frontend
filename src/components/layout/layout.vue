@@ -12,12 +12,7 @@
                 </div>
                 <div class="app-header__toolbar">
                     <div class="app-header-left">
-                        <div class="search-wrapper active">
-                            <div class="input-holder">
-                                <input type="text" class="search-input" placeholder="Block Height/Hash, Tx Hash, Address">
-                                <button class="search-icon"><span></span></button>
-                            </div>
-                        </div>
+                        <search-bar></search-bar>
                     </div>
                 </div>
             </div>
@@ -34,7 +29,9 @@
 
 <script>
 import common from "src/assets/common.css"
+import SearchBar from "./search-bar"
 export default {
+    components: {SearchBar},
 
 }
 </script>
@@ -46,11 +43,5 @@ export default {
     .app-header__toolbar{
         padding-left: 50px;
         width: 100%;
-    }
-    .search-wrapper{
-        width: 100%;
-    }
-    .input-holder{
-        width: 100% !important;
     }
 </style>
