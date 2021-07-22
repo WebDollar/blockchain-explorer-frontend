@@ -91,8 +91,8 @@
                                         <td>
                                             <span v-for="(tx, index) in block.data.data.transactions"
                                                   :key="`tx_index_${index}`">
-                                                <router-link :to="`/tx/${tx}`">
-                                                    {{tx}}
+                                                <router-link :to="`/tx/${tx.txId}`">
+                                                    {{tx.txId}}
                                                 </router-link> <br/>
                                             </span>
                                         </td>

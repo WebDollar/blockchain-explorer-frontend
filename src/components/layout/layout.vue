@@ -4,11 +4,10 @@
 
             <div class="app-header header-shadow">
                 <div class="logo">
-                    <router-link :to="`/`">
+                    <router-link to="/">
                         <span>WebDollar EXPLORER</span>
                     </router-link>
-                    <div class="header__pane ml-auto">
-                    </div>
+                    <div class="header__pane ml-auto"></div>
                 </div>
                 <div class="app-header__toolbar">
                     <div class="app-header-left">

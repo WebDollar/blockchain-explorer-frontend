@@ -123,8 +123,8 @@
                                                 <div v-for="(tx, index) in block.data.data.transactions"
                                                       :key="`tx_block_${index}`"
                                                        style="display: block">
-                                                    <router-link :to="`/tx/${tx}`">
-                                                        {{ subtract( tx) }}
+                                                    <router-link :to="`/tx/${tx.txId}`">
+                                                        {{ subtract( tx.txId ) }}
                                                     </router-link>
                                                 </div>
                                             </td>
