@@ -32,7 +32,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="row"><b>Balance</b></th>
-                                        <td>{{address.balance}}</td>
+                                        <td>{{address.balance / 10000 }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><b>Nonce</b></th>

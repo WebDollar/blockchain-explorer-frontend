@@ -14,7 +14,9 @@
             </div>
         </div>
 
-        <i  v-if="loading" class="fa fa-spinner fa-spin fa-3x" > </i>
+        <div v-if="loading" style="text-align: center">
+            <i class="fa fa-spinner fa-spin fa-3x" > </i>
+        </div>
         <template v-else>
 
             <div v-if="error" class="alert alert-danger fade show" role="alert">{{error}}</div>
@@ -287,7 +289,7 @@ export default {
                 start: this.start,
                 end: this.end,
             })
-            this.blocks = outBlocks
+            this.blocks = outBlocks.sort((a,b) => a.height - b.height)
 
         }
 
