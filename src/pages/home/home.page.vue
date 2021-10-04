@@ -289,7 +289,7 @@ export default {
                 start: this.start,
                 end: this.end,
             })
-            this.blocks = outBlocks.sort((a,b) => a.height - b.height)
+            this.blocks = outBlocks.sort((a,b) => b.height - a.height)
 
         }
 
