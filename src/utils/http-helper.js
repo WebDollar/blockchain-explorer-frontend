@@ -1,19 +1,21 @@
-const axios = require('axios')
+import fetch from 'node-fetch';
 
 class HttpHelper {
 
-    async get(address, body, timeout = 20000){
-        const out = await axios.get(address, {params: body})
-        return out.data
+    async get(address, body = {}, timeout = 20000){
+        const out = await fetch(address, { method: 'POST',
+            body: JSON.stringify(body),
+            timeout,
+        } )
+        return out.json()
     }
 
-    async post(address, body, json = true, timeout = 20000){
-        const out = await axios.post(address, body, {
-            headers: {
-                'content-type': 'text/json'
-            }
+    async post(address, body, timeout = 20000){
+        const out = await fetch(address, { method: 'POST',
+            body: JSON.stringify(body),
+            timeout,
         } )
-        return out.data
+        return out.json()
     }
 
 }
