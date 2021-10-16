@@ -22,58 +22,61 @@
             <div v-if="error" class="alert alert-danger fade show" role="alert">{{error}}</div>
             <template v-else>
 
-                <div class="col-lg-12">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body">
-                            <h5 class="card-title">Tx</h5>
-                            <table class="mb-0 table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row"><b>Hash</b></th>
-                                        <td>{{tx.txId}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><b>Nonce</b></th>
-                                        <td>{{tx.data.nonce}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><b>Version</b></th>
-                                        <td>{{tx.data.version}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><b>TimeLock</b></th>
-                                        <td>{{tx.data.timeLock}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><b>Timestamp</b></th>
-                                        <td>{{timeSince(tx.timestamp *1000 + 1524742312*1000) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><b>Block</b></th>
-                                        <td>
-                                            <router-link :to="`/block/${tx.blockHeight}`">
-                                                {{tx.blockHeight}}
-                                            </router-link>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <h5 class="card-title">Tx</h5>
+                                <table class="mb-0 table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><b>Hash</b></th>
+                                            <td>{{tx.txId}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><b>Nonce</b></th>
+                                            <td>{{tx.data.nonce}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><b>Version</b></th>
+                                            <td>{{tx.data.version}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><b>TimeLock</b></th>
+                                            <td>{{tx.data.timeLock}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><b>Timestamp</b></th>
+                                            <td>{{timeSince(tx.timestamp *1000 + 1524742312*1000) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><b>Block</b></th>
+                                            <td>
+                                                <router-link :to="`/block/${tx.blockHeight}`">
+                                                    {{tx.blockHeight}}
+                                                </router-link>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
 
 
-                <div class="col-lg-12">
+                    <div class="col-lg-12">
 
-                    <div class="main-card mb-3 card">
-                        <div data-v-14623592="" data-v-f3e19b62="" class="card-header-tab card-header"><div data-v-14623592="" data-v-f3e19b62="" class="card-header-title font-size-lg text-capitalize font-weight-normal"><i data-v-14623592="" data-v-f3e19b62="" class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"></i>
-                            Transfers
-                        </div></div>
-                        <div class="card-body">
+                        <div class="main-card mb-3 card">
+                            <div data-v-14623592="" data-v-f3e19b62="" class="card-header-tab card-header"><div data-v-14623592="" data-v-f3e19b62="" class="card-header-title font-size-lg text-capitalize font-weight-normal"><i data-v-14623592="" data-v-f3e19b62="" class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"></i>
+                                Transfers
+                            </div></div>
+                            <div class="card-body">
 
-                            <show-tx :tx="tx" />
+                                <show-tx :tx="tx" />
 
+                            </div>
                         </div>
+
                     </div>
 
                 </div>

@@ -7,8 +7,14 @@
                     <div class="page-title-icon">
                         <i class="pe-7s-diamond icon-gradient bg-mean-fruit"></i>
                     </div>
-                    <div> Address
-                        <div class="page-title-subheading"> Viewing Address: {{this.addr}}</div>
+                    <div>
+                        <span>Address</span>
+                        <div class="d-block">
+                            <div class="address ">
+                                <img :src="gravatar" :alt="this.addr" />
+                                <div class="page-title-subheading text-truncate"> {{ this.addr }} </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -22,49 +28,50 @@
             <div v-if="error" class="alert alert-danger fade show" role="alert">{{error}}</div>
             <template v-else>
 
-                <div class="col-lg-12">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body">
-                            <h5 class="card-title">Tx</h5>
-                            <table class="mb-0 table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row"><b>Address</b></th>
-                                        <td>{{address.address}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><b>Balance</b></th>
-                                        <td>{{address.balance / 10000 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><b>Nonce</b></th>
-                                        <td>{{address.nonce}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-12">
-
-                    <div class="main-card mb-3 card">
-                        <div data-v-14623592="" data-v-f3e19b62="" class="card-header-tab card-header"><div data-v-14623592="" data-v-f3e19b62="" class="card-header-title font-size-lg text-capitalize font-weight-normal"><i data-v-14623592="" data-v-f3e19b62="" class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"></i>
-                            Transfers {{address.txs}}
-                        </div></div>
-
-                        <div class="card-body">
-
-                            <show-tx v-for="(addressTx, index) in txs"  :class="`addressTx ${index % 2 ? 'row-odd' : ''} `"
-                                     :key="`addr_tx_${index}`"
-                                     :tx="addressTx.tx">
-
-                            </show-tx>
-
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <h5 class="card-title">Tx</h5>
+                                <table class="mb-0 table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><b>Address</b></th>
+                                            <td>{{address.address}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><b>Balance</b></th>
+                                            <td>{{address.balance / 10000 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><b>Nonce</b></th>
+                                            <td>{{address.nonce}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
+                    <div class="col-lg-12">
+
+                        <div class="main-card mb-3 card">
+                            <div data-v-14623592="" data-v-f3e19b62="" class="card-header-tab card-header"><div data-v-14623592="" data-v-f3e19b62="" class="card-header-title font-size-lg text-capitalize font-weight-normal"><i data-v-14623592="" data-v-f3e19b62="" class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"></i>
+                                Transfers {{address.txs}}
+                            </div></div>
+
+                            <div class="card-body">
+
+                                <show-tx v-for="(addressTx, index) in txs"  :class="`addressTx ${index % 2 ? 'row-odd' : ''} `"
+                                         :key="`addr_tx_${index}`"
+                                         :tx="addressTx.tx">
+
+                                </show-tx>
+
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
             </template>
@@ -82,6 +89,7 @@ import HttpHelper from "src/utils/http-helper"
 import consts from "consts/consts"
 import AddressHelper from "src/utils/address-helper"
 import ShowTx from "../../components/show-tx";
+import CryptoHelper from "src/utils/crypto-helper"
 
 export default {
 
@@ -99,8 +107,12 @@ export default {
 
     computed:{
         addr(){
-            return this.$route.params.address+this.$route.hash
-        }
+            return (this.$route.params.address+this.$route.hash).trim()
+        },
+        gravatar(){
+            const address = CryptoHelper.SHA256(this.addr)
+            return `https://www.gravatar.com/avatar/${ address.toString("hex") }?d=retro&f=y`
+        },
     },
 
     async mounted(){
@@ -151,6 +163,23 @@ export default {
     .addressTx{
         padding-top: 10px;
         padding-bottom: 10px;
+    }
+
+    .address{
+        display: grid;
+        grid-template-columns: 70px 1fr;
+        grid-column-gap: 10px;
+        align-items: center;
+    }
+
+    .address img{
+        display: inline-block;
+        width: 64px;
+        border-radius: 50%;
+    }
+
+    .address .page-title-subheading{
+        display: inline-block;
     }
 
 </style>
