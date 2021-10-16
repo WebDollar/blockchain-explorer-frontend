@@ -8,7 +8,7 @@
                         <i class="pe-7s-diamond icon-gradient bg-mean-fruit"></i>
                     </div>
                     <div> Transaction
-                        <div class="page-title-subheading"> Viewing Tx: {{this.$route.params.hash}}</div>
+                        <div class="page-title-subheading text-truncate"> Viewing Tx: {{this.$route.params.hash}}</div>
                     </div>
                 </div>
             </div>

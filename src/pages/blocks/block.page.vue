@@ -8,7 +8,7 @@
                         <i class="pe-7s-diamond icon-gradient bg-mean-fruit"></i>
                     </div>
                     <div> Block
-                        <div class="page-title-subheading"> Viewing block: {{this.$route.params.param}}</div>
+                        <div class="page-title-subheading text-truncate"> Viewing block: {{this.$route.params.param}}</div>
                     </div>
                 </div>
             </div>
