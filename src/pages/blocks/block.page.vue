@@ -155,7 +155,7 @@ export default {
     methods: {
 
         convertAddress: (a) => AddressHelper.convertAddress(a),
-        timeSince: (a) => StringHelper.timeSince(a),
+        timeSince: (...args) => StringHelper.timeSince(...args),
 
         async load(){
 

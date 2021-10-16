@@ -9,21 +9,21 @@
             <td>{{timeSince(tx.timestamp *1000 + 1524742312*1000) }}</td>
         </div>
         <div class="col-md-5">
-            <span v-for="(from, index) in tx.data.from.addresses"
+            <span v-for="(from, index) in tx.data.from.addresses" class="input"
                   :key="`tx_from_${index}`">
                 <router-link :to="`/address/${from.address}`">
                     {{from.address}}
                 </router-link>
-                <b class="red">-{{from.amount/10000}}</b>
+                <b class="text-danger">-{{formatMoney(from.amount/10000, 4)}}</b>
             </span>
         </div>
         <div class="col-md-5">
-            <span v-for="(to, index) in tx.data.to.addresses"
+            <span v-for="(to, index) in tx.data.to.addresses" class="output"
                   :key="`tx_to_${index}`">
                 <router-link :to="`/address/${to.address}`">
                     {{to.address}}
                 </router-link>
-                <b class="green">+{{to.amount/10000}}</b>
+                <b class="text-primary">+{{formatMoney( to.amount/10000, 4) }}</b>
             </span>
         </div>
     </div>
@@ -36,21 +36,21 @@ export default {
         tx: null,
     },
     methods:{
-        timeSince: (a) => StringHelper.timeSince(a),
+        timeSince: (...args) => StringHelper.timeSince(...args),
+        formatMoney: (...args) => StringHelper.formatMoney(...args),
     }
 }
 </script>
 
 <style scoped>
-    .red{
-        color: red
-    }
 
-    .green{
-        color: green
-    }
 
     .row-odd{
         background-color: rgba(0,0,0,0.03)
     }
+
+    .output, .input{
+        display: block
+    }
+
 </style>

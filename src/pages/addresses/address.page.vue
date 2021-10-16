@@ -37,11 +37,15 @@
                                     <tbody>
                                         <tr>
                                             <th scope="row"><b>Address</b></th>
-                                            <td>{{address.address}}</td>
+                                            <td class="fw-bolder">{{address.address}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><b>Balance</b></th>
-                                            <td>{{address.balance / 10000 }}</td>
+                                            <td>
+                                                <b>
+                                                    {{ formatMoney( address.balance / 10000, 4) }}
+                                                </b>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><b>Nonce</b></th>
@@ -90,6 +94,7 @@ import consts from "consts/consts"
 import AddressHelper from "src/utils/address-helper"
 import ShowTx from "../../components/show-tx";
 import CryptoHelper from "src/utils/crypto-helper"
+import StringHelper from "src/utils/string-helper"
 
 export default {
 
@@ -128,6 +133,7 @@ export default {
     methods: {
 
         convertAddress: (a) => AddressHelper.convertAddress(a),
+        formatMoney: (...args) => StringHelper.formatMoney(...args),
 
         async load(){
 

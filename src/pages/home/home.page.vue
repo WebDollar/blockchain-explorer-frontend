@@ -33,7 +33,7 @@
                             <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
                                 <div class="icon-wrapper rounded-circle">
                                     <div class="icon-wrapper-bg opacity-10 bg-warning"></div>
-                                    <i class="lnr-database text-dark opacity-8"></i>
+                                    <i class="fa fa-cubes text-dark opacity-8"></i>
                                 </div>
                                 <div class="widget-chart-content">
                                     <div class="widget-subheading">Blocks</div>
@@ -46,7 +46,7 @@
                             <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
                                 <div class="icon-wrapper rounded-circle">
                                     <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
-                                    <i class="fa fa-file text-white"></i>
+                                    <i class="fa fa-cube text-white"></i>
                                 </div>
                                 <div class="widget-chart-content">
                                     <div class="widget-subheading">Last Block Hash</div>
@@ -72,7 +72,7 @@
                             <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
                                 <div class="icon-wrapper rounded-circle">
                                     <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
-                                    <i class="fa fa-check-circle text-white"></i>
+                                    <i class="fa fa-credit-card text-white"></i>
                                 </div>
                                 <div class="widget-chart-content">
                                     <div class="widget-subheading">Transactions</div>
@@ -256,7 +256,7 @@ export default {
         },
 
         convertAddress: (a) => AddressHelper.convertAddress(a) ,
-        timeSince: (a) => StringHelper.timeSince(a),
+        timeSince: (...args) => StringHelper.timeSince(...args),
 
         async load(){
 
