@@ -60,7 +60,7 @@
                                         <tr>
                                             <th scope="row"><b>Miner Address</b></th>
                                             <td class="wordwrap">
-                                                <router-link :to="`address/${convertAddress(block.data.data.minerAddress)}`">
+                                                <router-link :to="`/address/${convertAddress(block.data.data.minerAddress)}`">
                                                     {{convertAddress(block.data.data.minerAddress)}}
                                                 </router-link>
                                             </td>
