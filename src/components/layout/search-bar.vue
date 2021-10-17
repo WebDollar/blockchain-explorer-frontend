@@ -28,12 +28,14 @@ export default {
                 this.loading = true
                 this.error = ""
 
-                const out = await HttpHelper.get(consts.server+"/search", {param: this.search})
+                const search = (this.search || "").trim()
+
+                const out = await HttpHelper.get(consts.server+"/search", {param: search })
                 if (!out || !out.result) throw "Result was not received"
 
-                if (out.result === "block") this.$router.push('/block/'+this.search)
-                if (out.result === "tx") this.$router.push('/tx/'+this.search)
-                if (out.result === "address") this.$router.push('/address/'+this.search)
+                if (out.result === "block") this.$router.push('/block/'+search)
+                if (out.result === "tx") this.$router.push('/tx/'+search)
+                if (out.result === "address") this.$router.push('/address/'+search)
 
             }catch(err){
                 this.error = err.toString()
