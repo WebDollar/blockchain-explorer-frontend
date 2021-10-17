@@ -6,7 +6,7 @@ const knownAddresses = {
     "WEBD$gDnTKoDgfy4k8f3ahDfCGG7yKQMxgdrDBr$": "Telegram Tipbot",
     "WEBD$gDx8CjURuVS+LSI91ufs@LH2QpIdSzaAxT$": "Project funds",
     "WEBD$gD5@1VU3ZiJ1siQxib#wAb4xeQTUS2zscn$": "Project funds 2",
-    "WEBD$gBttMQ5kqqfPjcwqG3dLZsiyNy+Goq$2#L$": "Bitrabbit Exchange"
+    "WEBD$gBttMQ5kqqfPjcwqG3dLZsiyNy+Goq$2#L$": "Bitrabbit Exchange",
     "WEBD$gCMxAKX96yhmaygo@NG+vnb4cz1eYoYpMv$": "Balanel_si_Miaunel",
     "WEBD$gDNzWkHmJC3ZcB1gINt58Uspj$mV9+wDkH$": "P2PB2B Exchange",
     "WEBD$gC+NwGALHX#9sXZjtUN++rt5t479EHIxa$$": "WWEBD Matic fund",
