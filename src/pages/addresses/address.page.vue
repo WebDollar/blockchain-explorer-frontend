@@ -40,7 +40,7 @@
                                             <td class="fw-bolder"> {{address.address}} </td>
                                         </tr>
                                         <tr v-if="displayAddress(address.address) !== address.address">
-                                            <th scope="row"><b>Address</b></th>
+                                            <th scope="row">Address name</th>
                                             <td class="fw-bolder"> {{ displayAddress(address.address) }} </td>
                                         </tr>
                                         <tr>

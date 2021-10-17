@@ -2,6 +2,8 @@ const crypto = require('crypto')
 
 const knownAddresses = {
     "WEBD$gDZwjjD7ZE5+AE+44ITr8yo5E2aXYT3mEH$": "DEV funds",
+    "WEBD$gCP41xykgy6K$LyGHCVNDZ44@PTp1kGufP$": "DEV 2 funds",
+    "WEBD$gDnTKoDgfy4k8f3ahDfCGG7yKQMxgdrDBr$": "Telegram Tipbot",
     "WEBD$gDx8CjURuVS+LSI91ufs@LH2QpIdSzaAxT$": "Project funds",
     "WEBD$gD5@1VU3ZiJ1siQxib#wAb4xeQTUS2zscn$": "Project funds 2",
     "WEBD$gBttMQ5kqqfPjcwqG3dLZsiyNy+Goq$2#L$": "Bitrabbit Exchange"
