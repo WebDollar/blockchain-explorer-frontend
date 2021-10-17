@@ -116,7 +116,7 @@ export default {
 
     computed:{
         addr(){
-            return (this.$route.params.address+this.$route.hash).trim()
+            return ( this.$route.params.address+this.$route.hash).trim().replace("%23","#")
         },
         gravatar(){
             const address = CryptoHelper.SHA256(this.addr)
