@@ -17,8 +17,8 @@
             <span v-for="(from, index) in tx.data.from.addresses" class="input"
                   :key="`tx_from_${index}`">
                 <div class="text-truncate">
-                    <router-link :to="`/address/${from.address}`">
-                        {{from.address}}
+                    <router-link :to="`/address/${from.address}`" :title="from.address">
+                        {{displayAddress(from.address)}}
                     </router-link>
                 </div>
                 <b class="text-danger">-{{formatMoney(from.amount/10000, 4)}}</b>
@@ -28,8 +28,8 @@
             <span v-for="(to, index) in tx.data.to.addresses" class="output"
                   :key="`tx_to_${index}`">
                 <div class="text-truncate">
-                    <router-link :to="`/address/${to.address}`">
-                        {{to.address}}
+                    <router-link :to="`/address/${to.address}`" :title="to.address">
+                        {{displayAddress(to.address)}}
                     </router-link>
                 </div>
                 <b class="text-primary">+{{formatMoney( to.amount/10000, 4) }}</b>
@@ -40,6 +40,8 @@
 
 <script>
 import StringHelper from "src/utils/string-helper"
+import AddressHelper from "src/utils/address-helper";
+
 export default {
     props: {
         tx: null,
@@ -47,6 +49,7 @@ export default {
     methods:{
         timeSince: (...args) => StringHelper.timeSince(...args),
         formatMoney: (...args) => StringHelper.formatMoney(...args),
+        displayAddress: (...args) => AddressHelper.displayAddress(...args),
     }
 }
 </script>

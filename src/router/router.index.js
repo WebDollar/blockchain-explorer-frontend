@@ -3,6 +3,7 @@ import Vue from "vue";
 
 import HomePage from "src/pages/home/home.page"
 import BlockPage from "src/pages/blocks/block.page"
+import KnownAddressesPage from "src/pages/known-addresses/known-addresses.page"
 import TxPage from "src/pages/txs/tx.page"
 import AddressPage from "src/pages/addresses/address.page"
 import NotFoundPage from "src/pages/not-found/not-found.page"
@@ -17,6 +18,8 @@ const routes = [
     { path: '/tx/:hash', component: TxPage },
     { path: '/address/:address', component: AddressPage },
     { path: '/not-found', component: NotFoundPage },
+
+    { path: '/known-addresses', component: KnownAddressesPage },
 ];
 
 const router = new VueRouter({

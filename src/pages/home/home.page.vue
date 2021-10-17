@@ -8,7 +8,8 @@
                         <i class="pe-7s-diamond icon-gradient bg-mean-fruit"></i>
                     </div>
                     <div> WebDollar Blockchain Explorer
-                        <div class="page-title-subheading">WebDollar operates on the WebDollar native blockchain. You can explore the WebDollar blockchain using this tool or <a href="https://webdollar.network" target="_blank">webdollar.network</a>.</div>
+                        <div class="page-title-subheading">WebDollar operates on the WebDollar native blockchain. You can explore the WebDollar blockchain using this tool.</div>
+                        <div class="page-title-subheading">See most <router-link to="/known-addresses">known addresses</router-link>.</div>
                     </div>
                 </div>
             </div>
@@ -35,7 +36,7 @@
                                     <div class="icon-wrapper-bg opacity-10 bg-warning"></div>
                                     <i class="fa fa-cubes text-dark opacity-8"></i>
                                 </div>
-                                <div class="widget-chart-content">
+                                <div class="widget-chart-content text-truncate">
                                     <div class="widget-subheading">Blocks</div>
                                     <div class="widget-numbers">{{chain.height}}</div>
                                 </div>
@@ -48,7 +49,7 @@
                                     <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
                                     <i class="fa fa-cube text-white"></i>
                                 </div>
-                                <div class="widget-chart-content">
+                                <div class="widget-chart-content text-truncate">
                                     <div class="widget-subheading">Last Block Hash</div>
                                     <div class="widget-numbers"><span>...{{chain.hash.substr(chain.hash.length-5)}}</span></div>
                                 </div>
@@ -61,7 +62,7 @@
                                     <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
                                     <i class="fa fa-coins text-white"></i>
                                 </div>
-                                <div class="widget-chart-content">
+                                <div class="widget-chart-content text-truncate">
                                     <div class="widget-subheading">Supply</div>
                                     <div class="widget-numbers"><span>{{ Math.floor( chain.circulatingSupply/10000/1000/1000/100)/10 }} b</span></div>
                                 </div>
@@ -74,7 +75,7 @@
                                     <div class="icon-wrapper-bg opacity-9 bg-danger"></div>
                                     <i class="fa fa-credit-card text-white"></i>
                                 </div>
-                                <div class="widget-chart-content">
+                                <div class="widget-chart-content text-truncate">
                                     <div class="widget-subheading">Transactions</div>
                                     <div class="widget-numbers"><span>{{chain.transactionsCount}}</span></div>
                                 </div>
@@ -124,25 +125,26 @@
                                             <td class="text-center" style="width: 140px;" >
                                                 <div v-for="(tx, index) in block.data.data.transactions"
                                                       :key="`tx_block_${index}`"
+                                                       class="text-truncate"
                                                        style="display: block">
                                                     <router-link :to="`/tx/${tx.txId}`">
-                                                        {{ subtract( tx.txId ) }}
+                                                        {{ tx.txId }}
                                                     </router-link>
                                                 </div>
                                             </td>
                                             <td class="text-center"  style="width: 80px">{{ timeSince(block.data.timeStamp*1000 + 1524742312*1000) }}</td>
                                             <td class="text-center"  style="width: 60px">{{block.data.reward/10000}}</td>
-                                            <td class="text-center"  style="width: 180px">
+                                            <td class="text-center text-truncate"  style="width: 180px">
                                                 <template v-if="block.data.data.minerAddress">
-                                                    <router-link :to="`/address/${convertAddress(block.data.data.minerAddress)}`">
-                                                        {{ subtract( convertAddress(block.data.data.minerAddress), 8 ) }}
+                                                    <router-link :to="`/address/${convertAddress(block.data.data.minerAddress)}`" :title="convertAddress(block.data.data.minerAddress)" >
+                                                        {{ displayAddress( convertAddress(block.data.data.minerAddress) ) }}
                                                     </router-link>
                                                 </template>
                                             </td>
-                                            <td class="text-center" style="width: 180px" >
+                                            <td class="text-center text-truncate" style="width: 180px" >
                                                 <template v-if="block.data.posMinerAddress">
-                                                    <router-link :to="`/address/${convertAddress(block.data.posMinerAddress)}`">
-                                                        {{subtract( convertAddress(block.data.posMinerAddress), 8 ) }}
+                                                    <router-link :to="`/address/${convertAddress(block.data.posMinerAddress)}`" :title=" convertAddress(block.data.posMinerAddress) ">
+                                                        {{ displayAddress( convertAddress(block.data.posMinerAddress)  ) }}
                                                     </router-link>
                                                 </template>
                                             </td>
@@ -218,6 +220,7 @@ export default {
 
             start: 0,
             end: 0,
+            height: 0,
 
             pageSet: null,
         }
@@ -257,6 +260,7 @@ export default {
 
         convertAddress: (a) => AddressHelper.convertAddress(a) ,
         timeSince: (...args) => StringHelper.timeSince(...args),
+        displayAddress: (...args) => AddressHelper.displayAddress(...args),
 
         async load(){
 
@@ -284,6 +288,7 @@ export default {
 
             this.start = Math.min(this.page * 10, this.chain.height-10);
             this.end = this.start + 10
+            this.height = this.chain.height
 
             const outBlocks = await HttpHelper.get(consts.server+"/blocks", {
                 start: this.start,

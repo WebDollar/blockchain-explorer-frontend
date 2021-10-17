@@ -60,8 +60,8 @@
                                         <tr>
                                             <th scope="row"><b>Miner Address</b></th>
                                             <td class="wordwrap">
-                                                <router-link :to="`/address/${convertAddress(block.data.data.minerAddress)}`">
-                                                    {{convertAddress(block.data.data.minerAddress)}}
+                                                <router-link :to="`/address/${convertAddress(block.data.data.minerAddress)}`" :title="convertAddress(block.data.data.minerAddress)">
+                                                    {{displayAddress( convertAddress(block.data.data.minerAddress) )}}
                                                 </router-link>
                                             </td>
                                         </tr>
@@ -89,8 +89,8 @@
                                             <th scope="row"><b>Resolved by</b></th>
                                             <td class="wordwrap">
                                                 <template v-if="block.data.posMinerAddress">
-                                                    <router-link :to="`/address/${convertAddress(block.data.posMinerAddress)}`">
-                                                        {{convertAddress(block.data.posMinerAddress)}}
+                                                    <router-link :to="`/address/${convertAddress(block.data.posMinerAddress)}`" :title="convertAddress(block.data.posMinerAddress)">
+                                                        {{ displayAddress( convertAddress(block.data.posMinerAddress) )}}
                                                      </router-link>
                                                 </template>
                                             </td>
@@ -100,7 +100,7 @@
                                             <td>
                                                 <span v-for="(tx, index) in block.data.data.transactions"
                                                       :key="`tx_index_${index}`">
-                                                    <router-link :to="`/tx/${tx.txId}`">
+                                                    <router-link :to="`/tx/${tx.txId}`" :title="tx.txId">
                                                         {{tx.txId}}
                                                     </router-link> <br/>
                                                 </span>
@@ -156,6 +156,7 @@ export default {
 
         convertAddress: (a) => AddressHelper.convertAddress(a),
         timeSince: (...args) => StringHelper.timeSince(...args),
+        displayAddress: (...args) => AddressHelper.displayAddress(...args),
 
         async load(){
 

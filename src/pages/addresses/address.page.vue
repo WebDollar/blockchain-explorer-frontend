@@ -37,7 +37,11 @@
                                     <tbody>
                                         <tr>
                                             <th scope="row"><b>Address</b></th>
-                                            <td class="fw-bolder">{{address.address}}</td>
+                                            <td class="fw-bolder"> {{address.address}} </td>
+                                        </tr>
+                                        <tr v-if="displayAddress(address.address) !== address.address">
+                                            <th scope="row"><b>Address</b></th>
+                                            <td class="fw-bolder"> {{ displayAddress(address.address) }} </td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><b>Balance</b></th>
@@ -134,6 +138,7 @@ export default {
 
         convertAddress: (a) => AddressHelper.convertAddress(a),
         formatMoney: (...args) => StringHelper.formatMoney(...args),
+        displayAddress: (...args) => AddressHelper.displayAddress(...args),
 
         async load(){
 
