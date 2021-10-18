@@ -44,12 +44,20 @@
                                             <td class="fw-bolder"> {{ displayAddress(address.address) }} </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row"><b>Balance</b></th>
+                                            <th scope="row"><b>Final Balance</b></th>
                                             <td>
                                                 <b>
                                                     {{ formatMoney( address.balance / 10000, 4) }}
                                                 </b>
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total Sent</th>
+                                            <td>{{ formatMoney( address.totalSent / 10000, 4) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total Received</th>
+                                            <td>{{ formatMoney( address.totalReceived / 10000, 4) }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><b>Nonce</b></th>
