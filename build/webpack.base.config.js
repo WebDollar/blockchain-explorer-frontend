@@ -43,7 +43,18 @@ module.exports = webpackConfig = {
         noParse: /es6-promise\.js$/, // avoid webpack shimming process
 
         rules: [
-
+            {
+                test: /\.(png|jpe?g|gif|svg)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'assets/[contenthash].[ext]',
+                            publicPath: '/',
+                        },
+                    },
+                ],
+            },
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
