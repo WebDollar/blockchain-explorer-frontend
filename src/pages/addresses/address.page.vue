@@ -45,11 +45,7 @@
                                         </tr>
                                         <tr>
                                             <th scope="row"><b>Final Balance</b></th>
-                                            <td>
-                                                <b>
-                                                    {{ formatMoney( address.balance / 10000, 4) }}
-                                                </b>
-                                            </td>
+                                            <td><b>{{ formatMoney( address.balance / 10000, 4) }}</b></td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Total Sent</th>
@@ -84,7 +80,8 @@
                                 <template v-else>
                                     <show-tx v-for="(addressTx, index) in txs"  :class="`addressTx ${index % 2 ? 'row-odd' : ''} `"
                                              :key="`addr_tx_${index}`"
-                                             :tx="addressTx.tx">
+                                             :tx="addressTx.tx"
+                                             :address="addr">
 
                                     </show-tx>
                                     <pagination :pages="pages" :page="page" :start="start" :end="end" :total="address.txs" :prefix="`address/${this.addr}`"  :right-to-left="true" />
