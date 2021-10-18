@@ -15,13 +15,13 @@
                     <li class="d-none d-sm-block paginate_button page-item" v-if="page < pages-2">
                         <router-link :to="`/${prefix}/${page+2}`"  class="page-link">{{ page+2 }}</router-link>
                     </li>
-                    <li class="paginate_button page-item" v-if="page < pages -1 ">
+                    <li class="paginate_button page-item" v-if="page <= pages -1 ">
                         <router-link :to="`/${prefix}/${page+1}`" class="page-link">{{ page+1}}</router-link>
                     </li>
                     <li class="paginate_button page-item active">
                         <router-link :to="`/${prefix}/${page}`" class="page-link">{{ page }}</router-link>
                     </li>
-                    <li class="paginate_button page-item" v-if="page>1">
+                    <li class="paginate_button page-item" v-if="page>=1">
                         <router-link :to="`/${prefix}/${page-1}`" class="page-link">{{ page-1 }}</router-link>
                     </li>
                     <li class="d-none d-sm-block paginate_button page-item " v-if="page>2">
