@@ -128,7 +128,7 @@ export default {
     computed:{
         page(){
 
-            const addr = ( this.$route.params.address+this.$route.hash).trim().replace("%23","#")
+            const addr = ( this.$route.params.address+this.$route.hash+(this.$route.params.page ? '/'+this.$route.params.page : '')).trim().replace("%23","#")
             if (addr.indexOf('/') > 0)
                 return Number.parseInt( addr.slice(addr.indexOf('/')+1  ) )
 
@@ -141,8 +141,10 @@ export default {
             return Math.floor(this.address.txs/10)
         },
         addr(){
-            const addr = ( this.$route.params.address+this.$route.hash).trim().replace("%23","#")
-            return addr.slice(0, addr.indexOf('/') )
+            const addr = ( this.$route.params.address+this.$route.hash+ (this.$route.params.page ? '/'+this.$route.params.page : '')).trim().replace("%23","#")
+            if (addr.indexOf('/') > 0)
+                return addr.slice(0, addr.indexOf('/') )
+            return addr
         },
         gravatar(){
             const address = CryptoHelper.SHA256(this.addr)
@@ -178,7 +180,7 @@ export default {
                 const address = await HttpHelper.get(consts.server + "/address", { address: addr} )
                 this.address = address
 
-                this.pageSet =  Math.floor(addr.txs / 10)
+                this.pageSet =  Math.floor(address.txs / 10)
 
                 await this.loadTxs()
 

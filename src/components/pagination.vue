@@ -2,7 +2,7 @@
     <div class="row" style="padding-top: 20px">
         <div class="col-sm-12 col-md-5">
             <div class="dataTables_info" id="example_info" role="status" aria-live="polite">
-                Showing {{this.start}} to {{this.end}} of {{total}} entries
+                Showing {{ Math.max(0, this.start) }} to {{this.end}} of {{total}} entries
             </div>
         </div>
         <div class="col-sm-12 col-md-7">
