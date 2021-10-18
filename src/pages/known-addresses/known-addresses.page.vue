@@ -22,7 +22,11 @@
                         <table class="mb-0 table table-bordered">
                             <tbody>
                                 <tr v-for="(name, address) in knownAddresses">
-                                    <th scope="row">{{address}}</th>
+                                    <th scope="row">
+                                        <router-link :to="`/address/${address}`" :title="address">
+                                            {{address}}
+                                         </router-link>
+                                    </th>
                                     <td class="fw-bolder"> {{name}} </td>
                                 </tr>
                             </tbody>
