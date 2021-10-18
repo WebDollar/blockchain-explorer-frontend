@@ -16,7 +16,10 @@ const routes = [
 
     { path: '/block/:param', component: BlockPage },
     { path: '/tx/:hash', component: TxPage },
+
     { path: '/address/:address', component: AddressPage },
+    { path: '/address/:address/:page', component: AddressPage },
+
     { path: '/not-found', component: NotFoundPage },
 
     { path: '/known-addresses', component: KnownAddressesPage },

@@ -70,16 +70,23 @@
 
                             <div class="card-body">
 
-                                <show-tx v-for="(addressTx, index) in txs"  :class="`addressTx ${index % 2 ? 'row-odd' : ''} `"
-                                         :key="`addr_tx_${index}`"
-                                         :tx="addressTx.tx">
+                                <div v-if="loadingTxs" style="text-align: center">
+                                    <i class="fa fa-spinner fa-spin fa-3x" > </i>
+                                </div>
+                                <template v-else>
+                                    <show-tx v-for="(addressTx, index) in txs"  :class="`addressTx ${index % 2 ? 'row-odd' : ''} `"
+                                             :key="`addr_tx_${index}`"
+                                             :tx="addressTx.tx">
 
-                                </show-tx>
+                                    </show-tx>
+                                    <pagination :pages="pages" :page="page" :start="start" :end="end" :total="address.txs" :prefix="`address/${this.addr}`"  :right-to-left="true" />
+                                </template>
 
                             </div>
                         </div>
 
                     </div>
+
                 </div>
 
             </template>
@@ -99,24 +106,43 @@ import AddressHelper from "src/utils/address-helper"
 import ShowTx from "../../components/show-tx";
 import CryptoHelper from "src/utils/crypto-helper"
 import StringHelper from "src/utils/string-helper"
+import Pagination from "src/components/pagination"
 
 export default {
 
-    components: {ShowTx, Layout},
+    components: {ShowTx, Layout, Pagination},
 
     data(){
         return {
             loading: true,
+            loadingTxs: true,
+
             error: "",
 
             address: null,
             txs: null,
+            pageSet: 0,
         }
     },
 
     computed:{
+        page(){
+
+            const addr = ( this.$route.params.address+this.$route.hash).trim().replace("%23","#")
+            if (addr.indexOf('/') > 0)
+                return Number.parseInt( addr.slice(addr.indexOf('/')+1  ) )
+
+            return this.pageSet
+        },
+
+        pages(){
+            if (!this.address) return 0
+            if (this.address.txs===0) return 0
+            return Math.floor(this.address.txs/10)
+        },
         addr(){
-            return ( this.$route.params.address+this.$route.hash).trim().replace("%23","#")
+            const addr = ( this.$route.params.address+this.$route.hash).trim().replace("%23","#")
+            return addr.slice(0, addr.indexOf('/') )
         },
         gravatar(){
             const address = CryptoHelper.SHA256(this.addr)
@@ -152,8 +178,9 @@ export default {
                 const address = await HttpHelper.get(consts.server + "/address", { address: addr} )
                 this.address = address
 
-                const txs = await HttpHelper.get(consts.server + "/address-txs", { address: addr} )
-                this.txs = txs
+                this.pageSet =  Math.floor(addr.txs / 10)
+
+                await this.loadTxs()
 
             }catch(err){
                 this.error = err.toString()
@@ -162,6 +189,24 @@ export default {
             }
 
         },
+
+        async loadTxs(){
+            try{
+                this.loadingTxs = true
+
+                this.start = Math.min(this.page * 10, this.address.txs-10);
+                this.end = this.start + 10
+
+                const txs = await HttpHelper.get(consts.server + "/address-txs", { address: this.addr, start: this.start, end: this.end} )
+                this.txs = txs
+
+
+            }catch(err){
+                this.error = err.toString()
+            }finally{
+                this.loadingTxs = false
+            }
+        }
 
     }
 

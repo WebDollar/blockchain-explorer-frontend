@@ -5,7 +5,7 @@
                 {{tx.blockHeight}}
             </router-link>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-1" :title="new Date(tx.timestamp *1000 + 1524742312*1000)">
             <td>{{timeSince(tx.timestamp *1000 + 1524742312*1000) }}</td>
         </div>
         <div class="col-md-2 text-truncate">
