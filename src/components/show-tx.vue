@@ -5,7 +5,7 @@
                 {{tx.blockHeight}}
             </router-link>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-1" :title="new Date(tx.timestamp *1000 + 1524742312*1000)">
             <td>{{timeSince(tx.timestamp *1000 + 1524742312*1000) }}</td>
         </div>
         <div class="col-md-2 text-truncate">
@@ -17,7 +17,7 @@
             <span v-for="(from, index) in tx.data.from.addresses" class="input"
                   :key="`tx_from_${index}`">
                 <div class="text-truncate">
-                    <router-link :to="`/address/${from.address}`" :title="from.address">
+                    <router-link :to="`/address/${from.address}`" :title="from.address" :class="`${from.address === address ? 'bg-warning':''}`">
                         {{displayAddress(from.address)}}
                     </router-link>
                 </div>
@@ -28,7 +28,7 @@
             <span v-for="(to, index) in tx.data.to.addresses" class="output"
                   :key="`tx_to_${index}`">
                 <div class="text-truncate">
-                    <router-link :to="`/address/${to.address}`" :title="to.address">
+                    <router-link :to="`/address/${to.address}`" :title="to.address" :class="`${to.address === address ? 'bg-warning':''}`">
                         {{displayAddress(to.address)}}
                     </router-link>
                 </div>
@@ -44,7 +44,8 @@ import AddressHelper from "src/utils/address-helper";
 
 export default {
     props: {
-        tx: null,
+        tx: {default: null},
+        address: {default: ""},
     },
     methods:{
         timeSince: (...args) => StringHelper.timeSince(...args),

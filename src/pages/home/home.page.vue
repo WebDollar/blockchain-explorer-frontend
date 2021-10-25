@@ -154,41 +154,8 @@
                             </div>
                         </div>
 
-                        <div class="row" style="padding-top: 20px">
-                            <div class="col-sm-12 col-md-5">
-                                <div class="dataTables_info" id="example_info" role="status" aria-live="polite">
-                                    Showing {{this.start}} to {{this.end}} of {{height}} entries
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-7">
-                                <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-                                    <ul class="pagination">
+                        <pagination :pages="pages" :page="page" :start="start" :end="end" :total="height" prefix="blocks" />
 
-                                        <li class="paginate_button page-item previous" v-if="page != pages">
-                                            <router-link :to="`/blocks/${pages}`" class="page-link"><<</router-link>
-                                        </li>
-                                        <li class="d-none d-sm-block paginate_button page-item" v-if="page < pages-2">
-                                            <router-link :to="`/blocks/${page+2}`"  class="page-link">{{ page+2 }}</router-link>
-                                        </li>
-                                        <li class="paginate_button page-item" v-if="page < pages -1 ">
-                                            <router-link :to="`/blocks/${page+1}`" class="page-link">{{ page+1}}</router-link>
-                                        </li>
-                                        <li class="paginate_button page-item active">
-                                            <router-link :to="`/blocks/${page}`" class="page-link">{{ page }}</router-link>
-                                        </li>
-                                        <li class="paginate_button page-item" v-if="page>1">
-                                            <router-link :to="`/blocks/${page-1}`" class="page-link">{{ page-1 }}</router-link>
-                                        </li>
-                                        <li class="d-none d-sm-block paginate_button page-item " v-if="page>2">
-                                            <router-link :to="`/blocks/${page-2}`" class="page-link">{{ page-2 }}</router-link>
-                                        </li>
-                                        <li class="paginate_button page-item next" v-if="page >0">
-                                            <router-link :to="`/blocks/0`" class="page-link">>></router-link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -206,9 +173,10 @@ import HttpHelper from "src/utils/http-helper"
 import consts from "consts/consts"
 import AddressHelper from "src/utils/address-helper"
 import StringHelper from "src/utils/string-helper"
+import Pagination from "../../components/pagination";
 
 export default {
-    components: { Layout },
+    components: {Pagination, Layout },
 
     data(){
         return{
