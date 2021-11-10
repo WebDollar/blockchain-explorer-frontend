@@ -56,6 +56,14 @@
                                             <td>{{ formatMoney( address.totalReceived / 10000, 4) }}</td>
                                         </tr>
                                         <tr>
+                                            <th scope="row">Total Mined Solo</th>
+                                            <td>{{ formatMoney( address.totalMinedSolo / 10000, 4) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total Mined for Pools (blocks won in pools)</th>
+                                            <td>{{ formatMoney( address.totalMinedPool / 10000, 4) }}</td>
+                                        </tr>
+                                        <tr>
                                             <th scope="row"><b>Nonce</b></th>
                                             <td>{{address.nonce}}</td>
                                         </tr>
@@ -127,6 +135,8 @@ export default {
             address: null,
             txs: null,
             pageSet: 0,
+
+            refreshInterval: null,
         }
     },
 
@@ -145,12 +155,14 @@ export default {
             if (this.address.txs===0) return 0
             return Math.floor(this.address.txs/10)
         },
+
         addr(){
             const addr = ( this.$route.params.address+this.$route.hash+ (this.$route.params.page ? '/'+this.$route.params.page : '')).trim().replace("%23","#")
             if (addr.indexOf('/') > 0)
                 return addr.slice(0, addr.indexOf('/') )
             return addr
         },
+
         gravatar(){
             const address = CryptoHelper.SHA256(this.addr)
             return `https://www.gravatar.com/avatar/${ address.toString("hex") }?d=retro&f=y`
@@ -158,13 +170,25 @@ export default {
     },
 
     async mounted(){
+        if (!this.refreshInterval)
+            this.refreshInterval = setInterval(()=>this.loadTxs(), 45 * 1000)
+
         return this.load()
     },
 
     watch:{
         $route (to, from){
+
+            if (!this.refreshInterval)
+                this.refreshInterval = setInterval(()=>this.loadTxs(), 45 * 1000)
+
             return this.load()
         }
+    },
+
+    beforeDestroy() {
+        if (this.refreshInterval)
+            clearInterval(this.refreshInterval)
     },
 
     methods: {
@@ -205,8 +229,13 @@ export default {
                 this.end = this.start + 10
 
                 const txs = await HttpHelper.get(consts.server + "/address-txs", { address: this.addr, start: this.start, end: this.end} )
-                this.txs = txs
 
+                if (this.txs && JSON.stringify(this.txs) !== JSON.stringify(txs)){
+                    var audio = new Audio('https://soundbible.com/mp3/Police%20Siren%203-SoundBible.com-553177907.mp3');
+                    audio.play();
+                }
+
+                this.txs = txs
 
             }catch(err){
                 this.error = err.toString()
