@@ -179,8 +179,8 @@ export default {
     watch:{
         $route (to, from){
 
-            if (!this.refreshInterval)
-                this.refreshInterval = setInterval(()=>this.loadTxs(), 45 * 1000)
+    //        if (!this.refreshInterval)
+      //          this.refreshInterval = setInterval(()=>this.loadTxs(), 45 * 1000)
 
             return this.load()
         }
@@ -230,10 +230,10 @@ export default {
 
                 const txs = await HttpHelper.get(consts.server + "/address-txs", { address: this.addr, start: this.start, end: this.end} )
 
-                if (this.txs && JSON.stringify(this.txs) !== JSON.stringify(txs)){
-                    var audio = new Audio('https://soundbible.com/mp3/Police%20Siren%203-SoundBible.com-553177907.mp3');
-                    audio.play();
-                }
+                // if (this.txs && JSON.stringify(this.txs) !== JSON.stringify(txs)){
+                //     var audio = new Audio('https://soundbible.com/mp3/Police%20Siren%203-SoundBible.com-553177907.mp3');
+                //     audio.play();
+                // }
 
                 this.txs = txs
 
